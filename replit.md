@@ -1,20 +1,32 @@
 # Project Overview
 
+## Owner
+**Fardowso Dhuuxo** - All Rights Reserved
+
 ## Repository Information
-This is an imported GitHub repository that appears to be empty or a placeholder project.
+This is an imported GitHub repository that has been set up and configured for development on Replit.
 
 ## Current State
-- Repository Name: https-github-dhuuxa26-.com-reptile-
-- Content: Only contains LICENSE and README files
-- No source code, build system, or runnable application present
+- Simple web server running on Node.js
+- Welcome page configured and running
+- Ready for development and customization
 
 ## Structure
-- `LICENSE` - Apache 2.0 license file
-- `README.md` - Minimal README with repository name
-- `.gitignore` - Contains Flash/ActionScript related ignores (suggests original intent may have been for Flash development)
+- `LICENSE` - Proprietary license, Copyright © 2025 Fardowso Dhuuxo
+- `README.md` - Project README with author information
+- `index.html` - Welcome page
+- `server.js` - Node.js web server
+- `.gitignore` - Node.js and project ignores
 
-## Notes
-This repository does not contain any executable code or application to run. It appears to be an empty or template repository.
+## Technical Setup
+- **Language:** Node.js 20
+- **Web Server:** Custom Node.js HTTP server
+- **Port:** 5000 (configured for Replit)
+- **Host:** 0.0.0.0 (allows proxy access)
+- **Deployment:** Configured for autoscale deployment
+
+## Workflow
+- `web-server` - Runs the Node.js server on port 5000
 
 ## Last Updated
 November 17, 2025
