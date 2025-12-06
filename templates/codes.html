@@ -1,29 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}All Codes - Activation Code Manager{% endblock %}
+{% block title %}All Codes - CodeVault{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>All Activation Codes</h1>
-    <p>Manage and monitor all your codes</p>
+    <h1>Code Management</h1>
+    <p>View, filter, and manage all activation codes</p>
 </div>
 
-<div class="card">
+<div class="glass-card animate-in">
     <div class="card-header">
-        <h2 class="card-title">&#128203; Code List</h2>
-        <a href="{{ url_for('generate') }}" class="btn btn-primary btn-sm">+ Generate New</a>
+        <h2 class="card-title">
+            <span class="card-title-icon icon-purple">📋</span>
+            All Codes
+        </h2>
+        <div class="action-bar">
+            <a href="{{ url_for('export_codes') }}" class="btn btn-secondary btn-sm">📥 Export CSV</a>
+            <a href="{{ url_for('generate') }}" class="btn btn-primary btn-sm">+ Generate New</a>
+        </div>
     </div>
     
-    <div class="filter-tabs">
-        <a href="{{ url_for('codes', status='all') }}" class="filter-tab {{ 'active' if filter_status == 'all' else '' }}">All</a>
-        <a href="{{ url_for('codes', status='valid') }}" class="filter-tab {{ 'active' if filter_status == 'valid' else '' }}">Valid</a>
-        <a href="{{ url_for('codes', status='used') }}" class="filter-tab {{ 'active' if filter_status == 'used' else '' }}">Used</a>
-        <a href="{{ url_for('codes', status='inactive') }}" class="filter-tab {{ 'active' if filter_status == 'inactive' else '' }}">Inactive</a>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <div class="search-box" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+            <input type="text" id="search-input" placeholder="Search codes..." onkeyup="filterTable()">
+        </div>
+        <div class="filter-tabs" style="margin-bottom: 0;">
+            <a href="{{ url_for('codes', status='all') }}" class="filter-tab {{ 'active' if filter_status == 'all' else '' }}">All</a>
+            <a href="{{ url_for('codes', status='valid') }}" class="filter-tab {{ 'active' if filter_status == 'valid' else '' }}">Valid</a>
+            <a href="{{ url_for('codes', status='used') }}" class="filter-tab {{ 'active' if filter_status == 'used' else '' }}">Used</a>
+            <a href="{{ url_for('codes', status='inactive') }}" class="filter-tab {{ 'active' if filter_status == 'inactive' else '' }}">Inactive</a>
+        </div>
     </div>
     
     {% if codes %}
         <div class="table-container">
-            <table class="table">
+            <table class="table" id="codes-table">
                 <thead>
                     <tr>
                         <th>Code</th>
@@ -38,11 +49,11 @@
                     {% for code in codes %}
                         <tr>
                             <td>
-                                <code style="font-family: monospace; background: var(--gray-100); padding: 0.25rem 0.5rem; border-radius: 4px;">
+                                <code class="mono" style="color: var(--primary-light); background: var(--bg-secondary); padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.9rem;">
                                     {{ code.code }}
                                 </code>
                             </td>
-                            <td>{{ code.name or '-' }}</td>
+                            <td style="color: var(--text-secondary);">{{ code.name or '—' }}</td>
                             <td>
                                 {% if not code.is_active %}
                                     <span class="badge badge-gray">Inactive</span>
@@ -54,18 +65,29 @@
                                     <span class="badge badge-success">Valid</span>
                                 {% endif %}
                             </td>
-                            <td>{{ code.uses_count }} / {{ code.uses_allowed }}</td>
-                            <td>{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
                             <td>
-                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('{{ code.code }}', this)">
-                                    &#128203;
-                                </button>
-                                <button class="btn btn-{{ 'danger' if code.is_active else 'success' }} btn-sm" onclick="toggleCode({{ code.id }})">
-                                    {% if code.is_active %}&#128683;{% else %}&#10004;{% endif %}
-                                </button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteCode({{ code.id }})">
-                                    &#128465;
-                                </button>
+                                <span style="color: var(--text-secondary);">{{ code.uses_count }}</span>
+                                <span style="color: var(--text-muted);">/</span>
+                                <span>{{ code.uses_allowed }}</span>
+                            </td>
+                            <td style="color: var(--text-secondary); font-size: 0.9rem;">
+                                {{ code.created_at.strftime('%Y-%m-%d %H:%M') }}
+                            </td>
+                            <td>
+                                <div class="action-bar">
+                                    <button class="btn btn-ghost btn-icon" onclick="copyToClipboard('{{ code.code }}', this)" title="Copy">
+                                        📋
+                                    </button>
+                                    <button class="btn btn-ghost btn-icon" onclick="showQRForCode('{{ code.code }}')" title="QR Code">
+                                        📱
+                                    </button>
+                                    <button class="btn btn-ghost btn-icon" onclick="toggleCode({{ code.id }})" title="{{ 'Deactivate' if code.is_active else 'Activate' }}">
+                                        {% if code.is_active %}🚫{% else %}✓{% endif %}
+                                    </button>
+                                    <button class="btn btn-ghost btn-icon" onclick="deleteCode({{ code.id }})" title="Delete" style="color: var(--danger);">
+                                        🗑️
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -76,7 +98,7 @@
         {% if pagination.pages > 1 %}
             <div class="pagination">
                 {% if pagination.has_prev %}
-                    <a href="{{ url_for('codes', page=pagination.prev_num, status=filter_status) }}">&laquo; Prev</a>
+                    <a href="{{ url_for('codes', page=pagination.prev_num, status=filter_status) }}">← Prev</a>
                 {% endif %}
                 
                 {% for page_num in pagination.iter_pages() %}
@@ -86,21 +108,67 @@
                             {{ page_num }}
                         </a>
                     {% else %}
-                        <span>...</span>
+                        <span style="border: none; background: transparent;">...</span>
                     {% endif %}
                 {% endfor %}
                 
                 {% if pagination.has_next %}
-                    <a href="{{ url_for('codes', page=pagination.next_num, status=filter_status) }}">Next &raquo;</a>
+                    <a href="{{ url_for('codes', page=pagination.next_num, status=filter_status) }}">Next →</a>
                 {% endif %}
             </div>
         {% endif %}
     {% else %}
         <div class="empty-state">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">&#128273;</div>
+            <div class="empty-state-icon">🔑</div>
             <p>No codes found</p>
-            <a href="{{ url_for('generate') }}" class="btn btn-primary" style="margin-top: 1rem;">Generate Your First Code</a>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Generate your first activation code</p>
+            <a href="{{ url_for('generate') }}" class="btn btn-primary" style="margin-top: 1rem;">Generate Code</a>
         </div>
     {% endif %}
 </div>
+
+<div id="qr-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="glass-card" style="max-width: 320px; text-align: center;">
+        <h3 style="margin-bottom: 1rem;">QR Code</h3>
+        <div class="qr-code" id="qr-display"></div>
+        <p class="mono" style="margin-top: 1rem; color: var(--primary-light);" id="qr-code-text"></p>
+        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="closeQR()">Close</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function filterTable() {
+        const search = document.getElementById('search-input').value.toLowerCase();
+        const rows = document.querySelectorAll('#codes-table tbody tr');
+        rows.forEach(row => {
+            const code = row.querySelector('code').textContent.toLowerCase();
+            const batch = row.cells[1].textContent.toLowerCase();
+            row.style.display = (code.includes(search) || batch.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    async function showQRForCode(code) {
+        try {
+            const response = await fetch(`/api/qr/${encodeURIComponent(code)}`);
+            const data = await response.json();
+            if (data.qr_code) {
+                document.getElementById('qr-display').innerHTML = `<img src="data:image/png;base64,${data.qr_code}" alt="QR Code" style="max-width: 200px;">`;
+                document.getElementById('qr-code-text').textContent = code;
+                document.getElementById('qr-modal').style.display = 'flex';
+            }
+        } catch (e) {
+            showToast('Error generating QR code', 'error');
+        }
+    }
+    
+    function closeQR() {
+        document.getElementById('qr-modal').style.display = 'none';
+    }
+    
+    document.getElementById('qr-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeQR();
+    });
+</script>
 {% endblock %}
