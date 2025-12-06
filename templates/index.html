@@ -1,69 +1,69 @@
 {% extends "base.html" %}
 
-{% block title %}CodeVault - Dashboard{% endblock %}
+{% block title %}CodeVault - Command Center{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Welcome to CodeVault</h1>
-    <p>Enterprise-grade activation code management system</p>
+    <h1>Command Center</h1>
+    <p>// System Status: Online</p>
 </div>
 
 <div class="grid grid-4 animate-in">
-    <div class="stat-card">
+    <div class="stat-card info">
         <div class="stat-value" data-value="{{ stats.total }}">{{ stats.total }}</div>
         <div class="stat-label">Total Codes</div>
     </div>
     <div class="stat-card success">
         <div class="stat-value" data-value="{{ stats.active }}">{{ stats.active }}</div>
-        <div class="stat-label">Active Codes</div>
+        <div class="stat-label">Active</div>
     </div>
     <div class="stat-card warning">
         <div class="stat-value" data-value="{{ stats.used }}">{{ stats.used }}</div>
-        <div class="stat-label">Used Codes</div>
+        <div class="stat-label">Used</div>
     </div>
     <div class="stat-card danger">
         <div class="stat-value" data-value="{{ stats.inactive }}">{{ stats.inactive }}</div>
-        <div class="stat-label">Inactive Codes</div>
+        <div class="stat-label">Inactive</div>
     </div>
 </div>
 
 <div class="grid grid-2" style="margin-top: 1.5rem;">
-    <div class="glass-card animate-in" style="animation-delay: 0.1s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.1s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-purple">⚡</span>
-                Quick Actions
+                <span class="card-icon">⚡</span>
+                Quick Access
             </h2>
         </div>
         <div class="grid grid-2" style="gap: 1rem;">
-            <a href="{{ url_for('generate') }}" class="feature-card" style="text-decoration: none;">
-                <div class="feature-icon">🔑</div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Generate Codes</h4>
-                <p style="color: var(--text-secondary); font-size: 0.9rem;">Create secure activation codes with custom options</p>
+            <a href="{{ url_for('generate') }}" class="feature-card">
+                <div class="feature-icon">◇</div>
+                <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">GENERATE</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Create secure activation codes</p>
             </a>
-            <a href="{{ url_for('validate') }}" class="feature-card" style="text-decoration: none;">
+            <a href="{{ url_for('validate') }}" class="feature-card">
                 <div class="feature-icon">✓</div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Validate Code</h4>
-                <p style="color: var(--text-secondary); font-size: 0.9rem;">Check and activate codes instantly</p>
+                <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">VALIDATE</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Check and activate codes</p>
             </a>
-            <a href="{{ url_for('codes') }}" class="feature-card" style="text-decoration: none;">
-                <div class="feature-icon">📋</div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Manage Codes</h4>
-                <p style="color: var(--text-secondary); font-size: 0.9rem;">View, filter, and manage all codes</p>
+            <a href="{{ url_for('codes') }}" class="feature-card">
+                <div class="feature-icon">◈</div>
+                <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">DATABASE</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Manage all codes</p>
             </a>
-            <a href="{{ url_for('statistics') }}" class="feature-card" style="text-decoration: none;">
-                <div class="feature-icon">📊</div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Analytics</h4>
-                <p style="color: var(--text-secondary); font-size: 0.9rem;">Track usage patterns and insights</p>
+            <a href="{{ url_for('statistics') }}" class="feature-card">
+                <div class="feature-icon">▲</div>
+                <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">ANALYTICS</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">View usage insights</p>
             </a>
         </div>
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.2s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.2s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-cyan">📈</span>
-                Usage Overview
+                <span class="card-icon">◉</span>
+                System Metrics
             </h2>
         </div>
         <div style="display: flex; align-items: center; justify-content: center; padding: 1rem;">
@@ -72,83 +72,83 @@
                 <circle class="progress" cx="60" cy="60" r="54" style="stroke-dashoffset: {{ 339.292 - (339.292 * stats.usage_rate / 100) }};"/>
             </svg>
             <div style="margin-left: 2rem; text-align: left;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary-light);">{{ stats.usage_rate }}%</div>
-                <div style="color: var(--text-secondary);">Usage Rate</div>
+                <div class="glow-text" style="font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 800;">{{ stats.usage_rate }}%</div>
+                <div style="color: var(--text-dim); font-family: 'Orbitron', sans-serif; font-size: 0.75rem; letter-spacing: 2px;">USAGE RATE</div>
             </div>
         </div>
         <div class="grid grid-2" style="margin-top: 1rem; gap: 1rem;">
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px; text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 600; color: var(--success);">{{ stats.generated_today }}</div>
-                <div style="color: var(--text-muted); font-size: 0.85rem;">Generated Today</div>
+            <div style="background: var(--dark-4); padding: 1.25rem; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border);">
+                <div class="glow-text" style="font-family: 'Orbitron', sans-serif; font-size: 1.75rem; font-weight: 700;">{{ stats.generated_today }}</div>
+                <div style="color: var(--text-muted); font-size: 0.75rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">GENERATED TODAY</div>
             </div>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px; text-align: center;">
-                <div style="font-size: 1.5rem; font-weight: 600; color: var(--warning);">{{ stats.used_today }}</div>
-                <div style="color: var(--text-muted); font-size: 0.85rem;">Used Today</div>
+            <div style="background: var(--dark-4); padding: 1.25rem; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border);">
+                <div style="color: var(--warning); font-family: 'Orbitron', sans-serif; font-size: 1.75rem; font-weight: 700; text-shadow: 0 0 15px rgba(255, 165, 2, 0.5);">{{ stats.used_today }}</div>
+                <div style="color: var(--text-muted); font-size: 0.75rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">ACTIVATED TODAY</div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="grid grid-2" style="margin-top: 1.5rem;">
-    <div class="glass-card animate-in" style="animation-delay: 0.3s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.3s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-green">🕐</span>
+                <span class="card-icon">⧫</span>
                 Recent Codes
             </h2>
-            <a href="{{ url_for('codes') }}" class="btn btn-secondary btn-sm">View All</a>
+            <a href="{{ url_for('codes') }}" class="btn btn-secondary btn-sm">VIEW ALL →</a>
         </div>
         {% if recent_codes %}
             {% for code in recent_codes %}
-                <div style="padding: 0.875rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                    <code class="mono" style="color: var(--primary-light); font-size: 0.9rem;">{{ code.code }}</code>
+                <div style="padding: 0.875rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
+                    <code class="mono glow-text" style="font-size: 0.9rem; letter-spacing: 2px;">{{ code.code }}</code>
                     <span class="badge {{ 'badge-success' if code.is_active and not code.is_used else 'badge-gray' }}">
-                        {% if code.is_used %}Used{% elif not code.is_active %}Inactive{% else %}Valid{% endif %}
+                        {% if code.is_used %}USED{% elif not code.is_active %}INACTIVE{% else %}VALID{% endif %}
                     </span>
                 </div>
             {% endfor %}
         {% else %}
             <div class="empty-state">
-                <div class="empty-state-icon">🔑</div>
-                <p>No codes generated yet</p>
-                <a href="{{ url_for('generate') }}" class="btn btn-primary" style="margin-top: 1rem;">Generate First Code</a>
+                <div class="empty-state-icon">◇</div>
+                <p style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">NO CODES IN DATABASE</p>
+                <a href="{{ url_for('generate') }}" class="btn btn-primary" style="margin-top: 1rem;">INITIALIZE</a>
             </div>
         {% endif %}
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.4s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.4s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-pink">✨</span>
-                Features
+                <span class="card-icon">◊</span>
+                System Capabilities
             </h2>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px;">
-                <span style="font-size: 1.5rem;">🔒</span>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background: var(--dark-4); border-radius: 6px; border-left: 2px solid var(--neon-green);">
+                <span style="font-size: 1.25rem; filter: drop-shadow(0 0 5px var(--neon-green));">◈</span>
                 <div>
-                    <div style="font-weight: 500; color: var(--text-primary);">Cryptographic Security</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Military-grade random code generation</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-weight: 500; color: var(--neon-green); font-size: 0.8rem; letter-spacing: 1px;">CRYPTOGRAPHIC SECURITY</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Military-grade random generation</div>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px;">
-                <span style="font-size: 1.5rem;">📱</span>
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background: var(--dark-4); border-radius: 6px; border-left: 2px solid var(--info);">
+                <span style="font-size: 1.25rem; filter: drop-shadow(0 0 5px var(--info));">◉</span>
                 <div>
-                    <div style="font-weight: 500; color: var(--text-primary);">QR Code Support</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Generate scannable QR codes</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-weight: 500; color: var(--info); font-size: 0.8rem; letter-spacing: 1px;">QR CODE MATRIX</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Scannable code generation</div>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px;">
-                <span style="font-size: 1.5rem;">🔌</span>
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background: var(--dark-4); border-radius: 6px; border-left: 2px solid var(--warning);">
+                <span style="font-size: 1.25rem; filter: drop-shadow(0 0 5px var(--warning));">⧫</span>
                 <div>
-                    <div style="font-weight: 500; color: var(--text-primary);">REST API</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Integrate with your applications</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-weight: 500; color: var(--warning); font-size: 0.8rem; letter-spacing: 1px;">REST API ACCESS</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Full external integration</div>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 10px;">
-                <span style="font-size: 1.5rem;">📊</span>
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background: var(--dark-4); border-radius: 6px; border-left: 2px solid var(--danger);">
+                <span style="font-size: 1.25rem; filter: drop-shadow(0 0 5px var(--danger));">▲</span>
                 <div>
-                    <div style="font-weight: 500; color: var(--text-primary);">Advanced Analytics</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-weight: 500; color: var(--danger); font-size: 0.8rem; letter-spacing: 1px;">REAL-TIME ANALYTICS</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Charts, trends, and insights</div>
                 </div>
             </div>

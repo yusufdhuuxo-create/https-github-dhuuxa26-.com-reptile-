@@ -4,65 +4,73 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Generate Activation Codes</h1>
-    <p>Create secure, customizable activation codes</p>
+    <h1>Code Generator</h1>
+    <p>// Initialize new activation sequences</p>
 </div>
 
 <div class="grid grid-2">
-    <div class="glass-card animate-in">
+    <div class="cyber-card animate-in">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-purple">⚙️</span>
+                <span class="card-icon">⚙</span>
                 Configuration
             </h2>
         </div>
         <form method="POST" id="generate-form">
             <div class="form-group">
-                <label class="form-label" for="count">Number of Codes</label>
+                <label class="form-label" for="count">Quantity</label>
                 <input type="number" class="form-input" id="count" name="count" min="1" max="100" value="1">
-                <p class="form-hint">Generate 1-100 codes at once</p>
+                <p class="form-hint">// Range: 1-100 codes per batch</p>
             </div>
             
             <div class="form-group">
-                <label class="form-label" for="prefix">Code Prefix</label>
-                <input type="text" class="form-input mono" id="prefix" name="prefix" maxlength="10" placeholder="e.g., PROMO, VIP, BETA">
-                <p class="form-hint">Add a custom prefix for easy identification</p>
+                <label class="form-label" for="prefix">Prefix ID</label>
+                <input type="text" class="form-input mono" id="prefix" name="prefix" maxlength="10" placeholder="PROMO | VIP | BETA">
+                <p class="form-hint">// Optional identifier tag</p>
             </div>
             
             <div class="form-group">
                 <label class="form-label" for="name">Batch Name</label>
-                <input type="text" class="form-input" id="name" name="name" placeholder="e.g., Summer Campaign 2024">
-                <p class="form-hint">Name this batch for organization</p>
+                <input type="text" class="form-input" id="name" name="name" placeholder="Campaign_2024">
+                <p class="form-hint">// Label for organization</p>
             </div>
             
             <div class="grid grid-2" style="gap: 1rem;">
                 <div class="form-group">
-                    <label class="form-label" for="uses_allowed">Uses Per Code</label>
+                    <label class="form-label" for="uses_allowed">Max Uses</label>
                     <input type="number" class="form-input" id="uses_allowed" name="uses_allowed" min="1" max="1000" value="1">
-                    <p class="form-hint">Max activations per code</p>
+                    <p class="form-hint">// Activations per code</p>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="expires_days">Expires After (Days)</label>
-                    <input type="number" class="form-input" id="expires_days" name="expires_days" min="1" max="365" placeholder="Never">
-                    <p class="form-hint">Leave empty for no expiration</p>
+                    <label class="form-label" for="expires_days">TTL (Days)</label>
+                    <input type="number" class="form-input" id="expires_days" name="expires_days" min="1" max="365" placeholder="∞">
+                    <p class="form-hint">// Time to live</p>
                 </div>
             </div>
             
+            <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label" style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" name="generate_qr" style="width: 20px; height: 20px; accent-color: var(--neon-green);">
+                    <span>Generate QR Matrices</span>
+                </label>
+                <p class="form-hint">// Scannable code images</p>
+            </div>
+            
             <button type="submit" class="btn btn-primary" style="width: 100%;">
-                ✨ Generate Codes
+                ◈ EXECUTE GENERATION
             </button>
         </form>
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.1s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.1s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-cyan">📋</span>
-                Generated Codes
+                <span class="card-icon">◇</span>
+                Output Stream
             </h2>
             {% if generated_codes %}
-                <span class="badge badge-success">{{ generated_codes|length }} codes</span>
+                <span class="badge badge-success">{{ generated_codes|length }} GENERATED</span>
             {% endif %}
         </div>
         
@@ -73,61 +81,61 @@
                         <span>{{ code }}</span>
                         <div style="display: flex; gap: 0.5rem;">
                             {% if code in qr_codes %}
-                                <button class="btn btn-ghost btn-icon" onclick="showQR('{{ code }}', '{{ qr_codes[code] }}')" title="Show QR Code">
-                                    📱
+                                <button class="btn btn-ghost btn-icon" onclick="showQR('{{ code }}', '{{ qr_codes[code] }}')" title="QR Matrix">
+                                    ◉
                                 </button>
                             {% endif %}
                             <button class="btn btn-ghost btn-icon" onclick="copyToClipboard('{{ code }}', this)" title="Copy">
-                                📋
+                                ⧫
                             </button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             
-            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
                 <button class="btn btn-secondary" style="flex: 1;" onclick="copyAllCodes()">
-                    📋 Copy All
+                    ⧫ COPY ALL
                 </button>
                 <button class="btn btn-secondary" style="flex: 1;" onclick="downloadCSV()">
-                    📥 Export CSV
+                    ↓ EXPORT CSV
                 </button>
             </div>
         {% else %}
             <div class="empty-state">
-                <div class="empty-state-icon">🔑</div>
-                <p>Generated codes will appear here</p>
-                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Configure options and click generate</p>
+                <div class="empty-state-icon">◇</div>
+                <p style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">AWAITING GENERATION COMMAND</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Configure parameters and execute</p>
             </div>
         {% endif %}
     </div>
 </div>
 
-<div class="glass-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
+<div class="cyber-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-green">💡</span>
-            Code Format Preview
+            <span class="card-icon">◊</span>
+            Format Preview
         </h2>
     </div>
-    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;">
         <div>
-            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">Without Prefix</div>
-            <code class="mono" style="font-size: 1.25rem; color: var(--primary-light);">ABCD-EFGH-IJKL</code>
+            <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">STANDARD</div>
+            <code class="mono glow-text" style="font-size: 1.25rem; letter-spacing: 3px;">ABCD-EFGH-IJKL</code>
         </div>
         <div>
-            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">With Prefix "PROMO"</div>
-            <code class="mono" style="font-size: 1.25rem; color: var(--primary-light);">PROMO-ABCD-EFGH-IJKL</code>
+            <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">WITH PREFIX</div>
+            <code class="mono glow-text" style="font-size: 1.25rem; letter-spacing: 3px;">VIP-ABCD-EFGH-IJKL</code>
         </div>
     </div>
 </div>
 
-<div id="qr-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
-    <div class="glass-card" style="max-width: 320px; text-align: center;">
-        <h3 style="margin-bottom: 1rem;">QR Code</h3>
+<div id="qr-modal" style="display: none; position: fixed; inset: 0; background: rgba(10, 15, 13, 0.95); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="cyber-card" style="max-width: 320px; text-align: center;">
+        <h3 style="font-family: 'Orbitron', sans-serif; color: var(--neon-green); margin-bottom: 1rem;">QR MATRIX</h3>
         <div class="qr-code" id="qr-display"></div>
-        <p class="mono" style="margin-top: 1rem; color: var(--primary-light);" id="qr-code-text"></p>
-        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="closeQR()">Close</button>
+        <p class="mono glow-text" style="margin-top: 1rem; letter-spacing: 2px;" id="qr-code-text"></p>
+        <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="closeQR()">CLOSE</button>
     </div>
 </div>
 {% endblock %}
@@ -139,7 +147,7 @@
     function copyAllCodes() {
         const text = generatedCodes.join('\n');
         navigator.clipboard.writeText(text).then(() => {
-            showToast('All codes copied to clipboard!');
+            showToast('All codes copied to buffer!');
         });
     }
     
@@ -151,11 +159,11 @@
         a.href = url;
         a.download = 'activation_codes.csv';
         a.click();
-        showToast('CSV downloaded!');
+        showToast('CSV export complete!');
     }
     
     function showQR(code, qrData) {
-        document.getElementById('qr-display').innerHTML = `<img src="data:image/png;base64,${qrData}" alt="QR Code" style="max-width: 200px;">`;
+        document.getElementById('qr-display').innerHTML = `<img src="data:image/png;base64,${qrData}" alt="QR Matrix" style="max-width: 200px;">`;
         document.getElementById('qr-code-text').textContent = code;
         document.getElementById('qr-modal').style.display = 'flex';
     }

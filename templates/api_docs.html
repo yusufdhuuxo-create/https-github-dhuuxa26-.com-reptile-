@@ -4,63 +4,63 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>API Documentation</h1>
-    <p>Integrate CodeVault with your applications</p>
+    <h1>API Gateway</h1>
+    <p>// Integration endpoints and documentation</p>
 </div>
 
-<div class="glass-card animate-in">
+<div class="cyber-card animate-in">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-purple">🔑</span>
-            API Key
+            <span class="card-icon">◈</span>
+            Access Token
         </h2>
     </div>
     {% if api_key %}
-        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <code class="mono" style="color: var(--primary-light); font-size: 0.9rem;">{{ api_key.key[:8] }}...{{ api_key.key[-8:] }}</code>
+        <div style="background: var(--dark-4); padding: 1.25rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--glass-border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <code class="mono glow-text" style="font-size: 0.95rem; letter-spacing: 2px;">{{ api_key.key[:8] }}...{{ api_key.key[-8:] }}</code>
                 <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('{{ api_key.key }}', this)">📋 Copy</button>
+                    <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('{{ api_key.key }}', this)">⧫ COPY</button>
                     <form method="POST" action="{{ url_for('regenerate_api_key') }}" style="display: inline;">
-                        <button type="submit" class="btn btn-danger btn-sm">🔄 Regenerate</button>
+                        <button type="submit" class="btn btn-danger btn-sm">⟳ REGENERATE</button>
                     </form>
                 </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">
-                Created: {{ api_key.created_at.strftime('%Y-%m-%d %H:%M') }}
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem; font-family: 'JetBrains Mono', monospace;">
+                // Created: {{ api_key.created_at.strftime('%Y-%m-%d %H:%M UTC') }}
             </p>
         </div>
     {% else %}
         <form method="POST" action="{{ url_for('generate_api_key') }}">
-            <button type="submit" class="btn btn-primary">🔑 Generate API Key</button>
+            <button type="submit" class="btn btn-primary">◈ GENERATE ACCESS TOKEN</button>
         </form>
     {% endif %}
 </div>
 
-<div class="glass-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.1s;">
+<div class="cyber-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.1s;">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-cyan">📡</span>
+            <span class="card-icon">◎</span>
             Endpoints
         </h2>
     </div>
     
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px;">
+        <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--success);">
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                 <span class="badge badge-success">POST</span>
-                <code class="mono" style="color: var(--text-primary);">/api/validate</code>
+                <code class="mono" style="color: var(--text-bright);">/api/validate</code>
             </div>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Validate and activate an activation code.</p>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Request Body</p>
-                <pre class="mono" style="color: var(--primary-light); font-size: 0.85rem; white-space: pre-wrap;">{
+            <p style="color: var(--text-dim); margin-bottom: 1rem;">// Validate and activate an activation sequence</p>
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">REQUEST BODY</p>
+                <pre class="mono glow-text" style="font-size: 0.85rem; white-space: pre-wrap;">{
   "code": "PROMO-ABCD-EFGH",
   "user_name": "John Doe"  // optional
 }</pre>
             </div>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Response</p>
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; border: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">RESPONSE</p>
                 <pre class="mono" style="color: var(--success); font-size: 0.85rem; white-space: pre-wrap;">{
   "valid": true,
   "message": "Code activated successfully!",
@@ -69,14 +69,14 @@
             </div>
         </div>
         
-        <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px;">
+        <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--info);">
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                 <span class="badge badge-info">GET</span>
-                <code class="mono" style="color: var(--text-primary);">/api/code/&lt;code&gt;/check</code>
+                <code class="mono" style="color: var(--text-bright);">/api/code/&lt;code&gt;/check</code>
             </div>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Check if a code is valid without activating it.</p>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Response</p>
+            <p style="color: var(--text-dim); margin-bottom: 1rem;">// Check code validity without activation</p>
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; border: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">RESPONSE</p>
                 <pre class="mono" style="color: var(--success); font-size: 0.85rem; white-space: pre-wrap;">{
   "exists": true,
   "valid": true,
@@ -86,14 +86,14 @@
             </div>
         </div>
         
-        <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px;">
+        <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--info);">
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                 <span class="badge badge-info">GET</span>
-                <code class="mono" style="color: var(--text-primary);">/api/stats</code>
+                <code class="mono" style="color: var(--text-bright);">/api/stats</code>
             </div>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Get overall statistics about activation codes.</p>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Response</p>
+            <p style="color: var(--text-dim); margin-bottom: 1rem;">// Retrieve system statistics</p>
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; border: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">RESPONSE</p>
                 <pre class="mono" style="color: var(--success); font-size: 0.85rem; white-space: pre-wrap;">{
   "total": 100,
   "active": 75,
@@ -104,19 +104,19 @@
             </div>
         </div>
         
-        <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px;">
+        <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--warning);">
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                 <span class="badge badge-success">POST</span>
-                <code class="mono" style="color: var(--text-primary);">/api/generate</code>
+                <code class="mono" style="color: var(--text-bright);">/api/generate</code>
             </div>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Generate new activation codes (requires API key in header).</p>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Headers</p>
-                <pre class="mono" style="color: var(--warning); font-size: 0.85rem;">X-API-Key: your_api_key_here</pre>
+            <p style="color: var(--text-dim); margin-bottom: 1rem;">// Generate new codes (requires API token)</p>
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid rgba(255, 165, 2, 0.3);">
+                <p style="color: var(--warning); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">HEADERS</p>
+                <pre class="mono" style="color: var(--warning); font-size: 0.85rem;">X-API-Key: your_access_token</pre>
             </div>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Request Body</p>
-                <pre class="mono" style="color: var(--primary-light); font-size: 0.85rem; white-space: pre-wrap;">{
+            <div style="background: var(--dark-2); padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">REQUEST BODY</p>
+                <pre class="mono glow-text" style="font-size: 0.85rem; white-space: pre-wrap;">{
   "count": 5,
   "prefix": "PROMO",
   "name": "Summer Sale",
@@ -124,28 +124,21 @@
   "expires_days": 30
 }</pre>
             </div>
-            <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px;">
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Response</p>
-                <pre class="mono" style="color: var(--success); font-size: 0.85rem; white-space: pre-wrap;">{
-  "success": true,
-  "codes": ["PROMO-ABCD-EFGH", ...]
-}</pre>
-            </div>
         </div>
     </div>
 </div>
 
-<div class="glass-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
+<div class="cyber-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-green">💻</span>
+            <span class="card-icon">◊</span>
             Code Examples
         </h2>
     </div>
     
-    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px;">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Python</h4>
-        <pre class="mono" style="color: var(--primary-light); font-size: 0.85rem; white-space: pre-wrap; background: var(--bg-primary); padding: 1rem; border-radius: 8px;">import requests
+    <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+        <h4 style="color: var(--neon-green); margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">// PYTHON</h4>
+        <pre class="mono glow-text" style="font-size: 0.85rem; white-space: pre-wrap; background: var(--dark-2); padding: 1rem; border-radius: 6px;">import requests
 
 response = requests.post(
     "{{ request.host_url }}api/validate",
@@ -154,22 +147,21 @@ response = requests.post(
 print(response.json())</pre>
     </div>
     
-    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; margin-top: 1rem;">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem;">JavaScript</h4>
-        <pre class="mono" style="color: var(--primary-light); font-size: 0.85rem; white-space: pre-wrap; background: var(--bg-primary); padding: 1rem; border-radius: 8px;">const response = await fetch("{{ request.host_url }}api/validate", {
+    <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; margin-top: 1rem; border: 1px solid var(--glass-border);">
+        <h4 style="color: var(--neon-cyan); margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">// JAVASCRIPT</h4>
+        <pre class="mono" style="color: var(--neon-cyan); font-size: 0.85rem; white-space: pre-wrap; background: var(--dark-2); padding: 1rem; border-radius: 6px;">const response = await fetch("{{ request.host_url }}api/validate", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ code: "PROMO-ABCD-EFGH", user_name: "John" })
+  body: JSON.stringify({ code: "PROMO-ABCD-EFGH" })
 });
-const data = await response.json();
-console.log(data);</pre>
+const data = await response.json();</pre>
     </div>
     
-    <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; margin-top: 1rem;">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem;">cURL</h4>
-        <pre class="mono" style="color: var(--primary-light); font-size: 0.85rem; white-space: pre-wrap; background: var(--bg-primary); padding: 1rem; border-radius: 8px;">curl -X POST {{ request.host_url }}api/validate \
+    <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; margin-top: 1rem; border: 1px solid var(--glass-border);">
+        <h4 style="color: var(--warning); margin-bottom: 1rem; font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">// CURL</h4>
+        <pre class="mono" style="color: var(--warning); font-size: 0.85rem; white-space: pre-wrap; background: var(--dark-2); padding: 1rem; border-radius: 6px;">curl -X POST {{ request.host_url }}api/validate \
   -H "Content-Type: application/json" \
-  -d '{"code": "PROMO-ABCD-EFGH", "user_name": "John"}'</pre>
+  -d '{"code": "PROMO-ABCD-EFGH"}'</pre>
     </div>
 </div>
 {% endblock %}

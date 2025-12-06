@@ -4,77 +4,77 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Validate Activation Code</h1>
-    <p>Check and activate your code instantly</p>
+    <h1>Code Validator</h1>
+    <p>// Authenticate and activate sequences</p>
 </div>
 
 <div class="grid grid-2">
-    <div class="glass-card animate-in">
+    <div class="cyber-card animate-in">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-purple">🔑</span>
-                Enter Code
+                <span class="card-icon">◎</span>
+                Input Terminal
             </h2>
         </div>
         <form method="POST" id="validate-form">
             <div class="form-group">
-                <label class="form-label" for="code">Activation Code</label>
+                <label class="form-label" for="code">Activation Sequence</label>
                 <input type="text" class="form-input mono" id="code" name="code" required 
                        placeholder="XXXX-XXXX-XXXX" 
-                       style="font-size: 1.25rem; letter-spacing: 2px; text-align: center; padding: 1.25rem;"
+                       style="font-size: 1.35rem; letter-spacing: 3px; text-align: center; padding: 1.5rem;"
                        value="{% if result %}{{ result.code }}{% endif %}">
-                <p class="form-hint">Enter the code exactly as received</p>
+                <p class="form-hint">// Enter code exactly as received</p>
             </div>
             
             <div class="form-group">
-                <label class="form-label" for="user_name">Your Name (Optional)</label>
+                <label class="form-label" for="user_name">User Identity (Optional)</label>
                 <input type="text" class="form-input" id="user_name" name="user_name" placeholder="For tracking purposes">
             </div>
             
-            <button type="submit" class="btn btn-success" style="width: 100%;">
-                ✓ Validate & Activate
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                ✓ AUTHENTICATE
             </button>
         </form>
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.1s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.1s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-cyan">📊</span>
-                Result
+                <span class="card-icon">◈</span>
+                Validation Result
             </h2>
         </div>
         
         {% if result %}
             <div class="result-box {{ 'success' if result.valid else 'error' }}">
-                <div class="result-icon">
-                    {% if result.valid %}✓{% else %}✕{% endif %}
+                <div class="result-icon" style="color: {{ 'var(--neon-green)' if result.valid else 'var(--danger)' }};">
+                    {% if result.valid %}◈{% else %}✕{% endif %}
                 </div>
-                <h3 style="margin-bottom: 0.5rem; font-size: 1.5rem;">
-                    {% if result.valid %}Code Activated!{% else %}Validation Failed{% endif %}
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; color: {{ 'var(--neon-green)' if result.valid else 'var(--danger)' }};">
+                    {% if result.valid %}AUTHORIZED{% else %}ACCESS DENIED{% endif %}
                 </h3>
-                <p style="color: var(--text-secondary);">{{ result.message }}</p>
+                <p style="color: var(--text-dim);">{{ result.message }}</p>
                 
                 {% if result.valid and result.data %}
-                    <div style="margin-top: 1.5rem; text-align: left; background: var(--bg-secondary); padding: 1.25rem; border-radius: 12px;">
-                        <div style="display: grid; gap: 0.75rem;">
+                    <div style="margin-top: 1.5rem; text-align: left; background: var(--dark-4); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                        <div style="display: grid; gap: 0.875rem;">
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: var(--text-muted);">Code</span>
-                                <code class="mono" style="color: var(--primary-light);">{{ result.data.code }}</code>
+                                <span style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.75rem;">CODE</span>
+                                <code class="mono glow-text" style="letter-spacing: 2px;">{{ result.data.code }}</code>
                             </div>
                             {% if result.data.name %}
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: var(--text-muted);">Batch</span>
+                                <span style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.75rem;">BATCH</span>
                                 <span>{{ result.data.name }}</span>
                             </div>
                             {% endif %}
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: var(--text-muted);">Uses</span>
+                                <span style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.75rem;">USES</span>
                                 <span>{{ result.data.uses_count }} / {{ result.data.uses_allowed }}</span>
                             </div>
                             {% if result.data.expires_at %}
                             <div style="display: flex; justify-content: space-between;">
-                                <span style="color: var(--text-muted);">Expires</span>
+                                <span style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.75rem;">EXPIRES</span>
                                 <span>{{ result.data.expires_at }}</span>
                             </div>
                             {% endif %}
@@ -84,41 +84,41 @@
             </div>
         {% else %}
             <div class="empty-state">
-                <div class="empty-state-icon">🔍</div>
-                <p>Enter a code to validate</p>
-                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Results will appear here</p>
+                <div class="empty-state-icon">◎</div>
+                <p style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">AWAITING INPUT</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Enter activation sequence to validate</p>
             </div>
         {% endif %}
     </div>
 </div>
 
-<div class="glass-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
+<div class="cyber-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.2s;">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-green">💡</span>
-            How It Works
+            <span class="card-icon">◊</span>
+            Protocol Sequence
         </h2>
     </div>
     <div class="grid grid-4">
         <div style="text-align: center; padding: 1rem;">
-            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem; color: white;">1</div>
-            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Enter Code</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">Type or paste your activation code</p>
+            <div style="width: 56px; height: 56px; background: var(--dark-4); border: 2px solid var(--neon-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: var(--neon-green); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);">01</div>
+            <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;">INPUT</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Enter activation sequence</p>
         </div>
         <div style="text-align: center; padding: 1rem;">
-            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem; color: white;">2</div>
-            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Validate</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">System checks validity and availability</p>
+            <div style="width: 56px; height: 56px; background: var(--dark-4); border: 2px solid var(--neon-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: var(--neon-green); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);">02</div>
+            <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;">SCAN</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">System validates code</p>
         </div>
         <div style="text-align: center; padding: 1rem;">
-            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem; color: white;">3</div>
-            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Activate</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">Valid codes are automatically activated</p>
+            <div style="width: 56px; height: 56px; background: var(--dark-4); border: 2px solid var(--neon-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: var(--neon-green); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);">03</div>
+            <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;">ACTIVATE</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Auto-activation on success</p>
         </div>
         <div style="text-align: center; padding: 1rem;">
-            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.25rem; color: white;">4</div>
-            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Track</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">Each use is recorded with timestamp</p>
+            <div style="width: 56px; height: 56px; background: var(--dark-4); border: 2px solid var(--neon-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: var(--neon-green); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);">04</div>
+            <h4 style="color: var(--neon-green); margin-bottom: 0.5rem; font-family: 'Orbitron', sans-serif; font-size: 0.8rem;">LOG</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Usage recorded with timestamp</p>
         </div>
     </div>
 </div>

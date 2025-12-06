@@ -4,35 +4,35 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Analytics Dashboard</h1>
-    <p>Track usage patterns and gain insights</p>
+    <h1>Analytics Hub</h1>
+    <p>// Real-time usage metrics and insights</p>
 </div>
 
 <div class="grid grid-4 animate-in">
-    <div class="stat-card">
+    <div class="stat-card info">
         <div class="stat-value" data-value="{{ stats.total }}">{{ stats.total }}</div>
         <div class="stat-label">Total Codes</div>
     </div>
     <div class="stat-card success">
         <div class="stat-value" data-value="{{ stats.active }}">{{ stats.active }}</div>
-        <div class="stat-label">Active Codes</div>
+        <div class="stat-label">Active</div>
     </div>
     <div class="stat-card warning">
         <div class="stat-value" data-value="{{ stats.used }}">{{ stats.used }}</div>
-        <div class="stat-label">Used Codes</div>
+        <div class="stat-label">Used</div>
     </div>
     <div class="stat-card danger">
         <div class="stat-value" data-value="{{ stats.inactive }}">{{ stats.inactive }}</div>
-        <div class="stat-label">Inactive Codes</div>
+        <div class="stat-label">Inactive</div>
     </div>
 </div>
 
 <div class="grid grid-2" style="margin-top: 1.5rem;">
-    <div class="glass-card animate-in" style="animation-delay: 0.1s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.1s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-purple">📊</span>
-                Code Distribution
+                <span class="card-icon">◉</span>
+                Distribution Matrix
             </h2>
         </div>
         <div style="height: 280px; display: flex; align-items: center; justify-content: center;">
@@ -40,11 +40,11 @@
         </div>
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.2s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.2s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-cyan">📈</span>
-                Usage Trend (7 Days)
+                <span class="card-icon">▲</span>
+                7-Day Trend
             </h2>
         </div>
         <div style="height: 280px;">
@@ -54,64 +54,64 @@
 </div>
 
 <div class="grid grid-2" style="margin-top: 1.5rem;">
-    <div class="glass-card animate-in" style="animation-delay: 0.3s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.3s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-green">⚡</span>
-                Today's Activity
+                <span class="card-icon">⚡</span>
+                Today's Metrics
             </h2>
         </div>
         <div class="grid grid-2" style="gap: 1rem;">
-            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; text-align: center;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--success);" data-value="{{ stats.generated_today }}">{{ stats.generated_today }}</div>
-                <div style="color: var(--text-muted);">Generated Today</div>
+            <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border);">
+                <div class="glow-text" style="font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700;" data-value="{{ stats.generated_today }}">{{ stats.generated_today }}</div>
+                <div style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 1px;">GENERATED</div>
             </div>
-            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; text-align: center;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--warning);" data-value="{{ stats.used_today }}">{{ stats.used_today }}</div>
-                <div style="color: var(--text-muted);">Used Today</div>
+            <div style="background: var(--dark-4); padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border);">
+                <div style="font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--warning); text-shadow: 0 0 20px rgba(255, 165, 2, 0.5);" data-value="{{ stats.used_today }}">{{ stats.used_today }}</div>
+                <div style="color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 1px;">ACTIVATED</div>
             </div>
         </div>
         <div style="margin-top: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="color: var(--text-secondary);">Usage Rate</span>
-                <span style="font-weight: 600; color: var(--primary-light);">{{ stats.usage_rate }}%</span>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="color: var(--text-dim); font-family: 'Orbitron', sans-serif; font-size: 0.75rem; letter-spacing: 1px;">USAGE RATE</span>
+                <span class="glow-text" style="font-family: 'Orbitron', sans-serif; font-weight: 600;">{{ stats.usage_rate }}%</span>
             </div>
-            <div style="background: var(--bg-secondary); border-radius: 10px; height: 12px; overflow: hidden;">
-                <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: {{ stats.usage_rate }}%; border-radius: 10px; transition: width 1s ease-out;"></div>
+            <div style="background: var(--dark-5); border-radius: 6px; height: 14px; overflow: hidden; border: 1px solid var(--glass-border);">
+                <div style="background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); height: 100%; width: {{ stats.usage_rate }}%; border-radius: 5px; transition: width 1s ease-out; box-shadow: 0 0 15px var(--neon-green);"></div>
             </div>
         </div>
     </div>
     
-    <div class="glass-card animate-in" style="animation-delay: 0.4s;">
+    <div class="cyber-card animate-in" style="animation-delay: 0.4s;">
         <div class="card-header">
             <h2 class="card-title">
-                <span class="card-title-icon icon-pink">🕐</span>
+                <span class="card-icon">⧫</span>
                 Recent Codes
             </h2>
-            <a href="{{ url_for('codes') }}" class="btn btn-secondary btn-sm">View All</a>
+            <a href="{{ url_for('codes') }}" class="btn btn-secondary btn-sm">VIEW ALL →</a>
         </div>
         {% if recent_codes %}
             {% for code in recent_codes %}
-                <div style="padding: 0.875rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                    <code class="mono" style="color: var(--primary-light); font-size: 0.9rem;">{{ code.code }}</code>
+                <div style="padding: 0.875rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
+                    <code class="mono glow-text" style="font-size: 0.9rem; letter-spacing: 2px;">{{ code.code }}</code>
                     <span class="badge {{ 'badge-success' if code.is_active and not code.is_used else 'badge-gray' }}">
-                        {% if code.is_used %}Used{% elif not code.is_active %}Inactive{% else %}Valid{% endif %}
+                        {% if code.is_used %}USED{% elif not code.is_active %}INACTIVE{% else %}VALID{% endif %}
                     </span>
                 </div>
             {% endfor %}
         {% else %}
             <div class="empty-state">
-                <p>No codes generated yet</p>
+                <p style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">NO DATA</p>
             </div>
         {% endif %}
     </div>
 </div>
 
-<div class="glass-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.5s;">
+<div class="cyber-card animate-in" style="margin-top: 1.5rem; animation-delay: 0.5s;">
     <div class="card-header">
         <h2 class="card-title">
-            <span class="card-title-icon icon-purple">✨</span>
-            Recent Activations
+            <span class="card-icon">◊</span>
+            Activation Log
         </h2>
     </div>
     {% if recent_activations %}
@@ -119,22 +119,22 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Used By</th>
-                        <th>Activated At</th>
+                        <th>Sequence</th>
+                        <th>User</th>
+                        <th>Timestamp</th>
                         <th>Uses</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for code in recent_activations %}
                         <tr>
-                            <td><code class="mono" style="color: var(--primary-light);">{{ code.code }}</code></td>
-                            <td style="color: var(--text-secondary);">{{ code.used_by or 'Anonymous' }}</td>
-                            <td style="color: var(--text-secondary);">{{ code.used_at.strftime('%Y-%m-%d %H:%M') if code.used_at else '—' }}</td>
+                            <td><code class="mono glow-text" style="letter-spacing: 2px;">{{ code.code }}</code></td>
+                            <td style="color: var(--text-dim);">{{ code.used_by or 'Anonymous' }}</td>
+                            <td style="color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">{{ code.used_at.strftime('%Y-%m-%d %H:%M') if code.used_at else '—' }}</td>
                             <td>
-                                <span style="color: var(--text-secondary);">{{ code.uses_count }}</span>
+                                <span style="color: var(--neon-green);">{{ code.uses_count }}</span>
                                 <span style="color: var(--text-muted);">/</span>
-                                <span>{{ code.uses_allowed }}</span>
+                                <span style="color: var(--text-dim);">{{ code.uses_allowed }}</span>
                             </td>
                         </tr>
                     {% endfor %}
@@ -143,9 +143,9 @@
         </div>
     {% else %}
         <div class="empty-state">
-            <div class="empty-state-icon">🔍</div>
-            <p>No activations yet</p>
-            <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Activated codes will appear here</p>
+            <div class="empty-state-icon">◎</div>
+            <p style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">NO ACTIVATIONS RECORDED</p>
+            <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">Activity will appear here</p>
         </div>
     {% endif %}
 </div>
@@ -153,11 +153,14 @@
 
 {% block scripts %}
 <script>
-    const theme = document.documentElement.dataset.theme;
-    const textColor = theme === 'dark' ? '#94a3b8' : '#475569';
-    const gridColor = theme === 'dark' ? 'rgba(148, 163, 184, 0.1)' : 'rgba(15, 23, 42, 0.1)';
+    const neonGreen = '#00ff88';
+    const neonCyan = '#00ffff';
+    const warning = '#ffa502';
+    const danger = '#ff4757';
+    const textDim = '#7aa892';
+    const gridColor = 'rgba(0, 255, 136, 0.1)';
     
-    Chart.defaults.color = textColor;
+    Chart.defaults.color = textDim;
     Chart.defaults.borderColor = gridColor;
     
     new Chart(document.getElementById('distributionChart'), {
@@ -167,25 +170,26 @@
             datasets: [{
                 data: [{{ stats.active }}, {{ stats.used }}, {{ stats.inactive }}],
                 backgroundColor: [
-                    'rgba(16, 185, 129, 0.8)',
-                    'rgba(245, 158, 11, 0.8)',
-                    'rgba(239, 68, 68, 0.8)'
+                    neonGreen,
+                    warning,
+                    danger
                 ],
                 borderWidth: 0,
-                spacing: 2
+                spacing: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%',
+            cutout: '70%',
             plugins: {
                 legend: {
                     position: 'bottom',
                     labels: {
                         padding: 20,
                         usePointStyle: true,
-                        pointStyle: 'circle'
+                        pointStyle: 'rect',
+                        font: { family: 'Orbitron', size: 10 }
                     }
                 }
             }
@@ -199,21 +203,27 @@
             datasets: [{
                 label: 'Generated',
                 data: {{ daily_generated | safe }},
-                borderColor: 'rgba(139, 92, 246, 1)',
-                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                borderColor: neonGreen,
+                backgroundColor: 'rgba(0, 255, 136, 0.1)',
                 tension: 0.4,
                 fill: true,
                 pointRadius: 4,
-                pointHoverRadius: 6
+                pointHoverRadius: 8,
+                pointBackgroundColor: neonGreen,
+                pointBorderColor: neonGreen,
+                borderWidth: 2
             }, {
                 label: 'Used',
                 data: {{ daily_used | safe }},
-                borderColor: 'rgba(6, 182, 212, 1)',
-                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                borderColor: neonCyan,
+                backgroundColor: 'rgba(0, 255, 255, 0.1)',
                 tension: 0.4,
                 fill: true,
                 pointRadius: 4,
-                pointHoverRadius: 6
+                pointHoverRadius: 8,
+                pointBackgroundColor: neonCyan,
+                pointBorderColor: neonCyan,
+                borderWidth: 2
             }]
         },
         options: {
@@ -225,21 +235,20 @@
                     labels: {
                         padding: 20,
                         usePointStyle: true,
-                        pointStyle: 'circle'
+                        pointStyle: 'rect',
+                        font: { family: 'Orbitron', size: 10 }
                     }
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: {
-                        color: gridColor
-                    }
+                    grid: { color: gridColor },
+                    ticks: { font: { family: 'JetBrains Mono', size: 10 } }
                 },
                 x: {
-                    grid: {
-                        display: false
-                    }
+                    grid: { display: false },
+                    ticks: { font: { family: 'JetBrains Mono', size: 10 } }
                 }
             }
         }
