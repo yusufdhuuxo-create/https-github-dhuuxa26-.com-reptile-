@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}All Codes - Activation Code Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>All Activation Codes</h1>
+    <p>Manage and monitor all your codes</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">&#128203; Code List</h2>
+        <a href="{{ url_for('generate') }}" class="btn btn-primary btn-sm">+ Generate New</a>
+    </div>
+    
+    <div class="filter-tabs">
+        <a href="{{ url_for('codes', status='all') }}" class="filter-tab {{ 'active' if filter_status == 'all' else '' }}">All</a>
+        <a href="{{ url_for('codes', status='valid') }}" class="filter-tab {{ 'active' if filter_status == 'valid' else '' }}">Valid</a>
+        <a href="{{ url_for('codes', status='used') }}" class="filter-tab {{ 'active' if filter_status == 'used' else '' }}">Used</a>
+        <a href="{{ url_for('codes', status='inactive') }}" class="filter-tab {{ 'active' if filter_status == 'inactive' else '' }}">Inactive</a>
+    </div>
+    
+    {% if codes %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Uses</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for code in codes %}
+                        <tr>
+                            <td>
+                                <code style="font-family: monospace; background: var(--gray-100); padding: 0.25rem 0.5rem; border-radius: 4px;">
+                                    {{ code.code }}
+                                </code>
+                            </td>
+                            <td>{{ code.name or '-' }}</td>
+                            <td>
+                                {% if not code.is_active %}
+                                    <span class="badge badge-gray">Inactive</span>
+                                {% elif code.is_used %}
+                                    <span class="badge badge-danger">Used</span>
+                                {% elif code.expires_at and code.expires_at < now %}
+                                    <span class="badge badge-warning">Expired</span>
+                                {% else %}
+                                    <span class="badge badge-success">Valid</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ code.uses_count }} / {{ code.uses_allowed }}</td>
+                            <td>{{ code.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('{{ code.code }}', this)">
+                                    &#128203;
+                                </button>
+                                <button class="btn btn-{{ 'danger' if code.is_active else 'success' }} btn-sm" onclick="toggleCode({{ code.id }})">
+                                    {% if code.is_active %}&#128683;{% else %}&#10004;{% endif %}
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCode({{ code.id }})">
+                                    &#128465;
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if pagination.pages > 1 %}
+            <div class="pagination">
+                {% if pagination.has_prev %}
+                    <a href="{{ url_for('codes', page=pagination.prev_num, status=filter_status) }}">&laquo; Prev</a>
+                {% endif %}
+                
+                {% for page_num in pagination.iter_pages() %}
+                    {% if page_num %}
+                        <a href="{{ url_for('codes', page=page_num, status=filter_status) }}" 
+                           class="{{ 'active' if page_num == pagination.page else '' }}">
+                            {{ page_num }}
+                        </a>
+                    {% else %}
+                        <span>...</span>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if pagination.has_next %}
+                    <a href="{{ url_for('codes', page=pagination.next_num, status=filter_status) }}">Next &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">&#128273;</div>
+            <p>No codes found</p>
+            <a href="{{ url_for('generate') }}" class="btn btn-primary" style="margin-top: 1rem;">Generate Your First Code</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

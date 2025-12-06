@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Codes - Activation Code Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Generate Activation Codes</h1>
+    <p>Create unique, secure activation codes for your needs</p>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128273; Code Settings</h2>
+        </div>
+        <form method="POST">
+            <div class="form-group">
+                <label class="form-label" for="count">Number of Codes</label>
+                <input type="number" class="form-input" id="count" name="count" min="1" max="100" value="1">
+                <p class="form-hint">Generate up to 100 codes at once</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="prefix">Code Prefix (Optional)</label>
+                <input type="text" class="form-input" id="prefix" name="prefix" maxlength="10" placeholder="e.g., PROMO">
+                <p class="form-hint">Add a custom prefix to identify code types</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="name">Batch Name (Optional)</label>
+                <input type="text" class="form-input" id="name" name="name" placeholder="e.g., Summer Sale 2024">
+                <p class="form-hint">Name this batch for easy identification</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="uses_allowed">Uses Per Code</label>
+                <input type="number" class="form-input" id="uses_allowed" name="uses_allowed" min="1" max="1000" value="1">
+                <p class="form-hint">How many times each code can be used</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="expires_days">Expires After (Days)</label>
+                <input type="number" class="form-input" id="expires_days" name="expires_days" min="1" max="365" placeholder="Leave empty for no expiration">
+                <p class="form-hint">Codes will expire after this many days</p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                &#10024; Generate Codes
+            </button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128203; Generated Codes</h2>
+        </div>
+        
+        {% if generated_codes %}
+            <div style="margin-bottom: 1rem; color: var(--gray-600);">
+                <strong>{{ generated_codes|length }}</strong> code(s) generated successfully!
+            </div>
+            
+            <div style="max-height: 400px; overflow-y: auto;">
+                {% for code in generated_codes %}
+                    <div class="code-display">
+                        <span>{{ code }}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('{{ code }}', this)">&#128203;</button>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="copyAllCodes()">
+                &#128203; Copy All Codes
+            </button>
+        {% else %}
+            <div class="empty-state">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">&#128273;</div>
+                <p>Generated codes will appear here</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Fill in the form and click generate</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyAllCodes() {
+        const codes = [{% if generated_codes %}{% for code in generated_codes %}'{{ code }}'{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}];
+        const text = codes.join('\n');
+        navigator.clipboard.writeText(text).then(() => {
+            alert('All codes copied to clipboard!');
+        });
+    }
+</script>
+{% endblock %}

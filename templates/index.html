@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Activation Code Manager - Home{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Activation Code Manager</h1>
+    <p>Generate, validate, and manage activation codes with ease</p>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#127919; Quick Generate</h2>
+        </div>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+            Create unique activation codes for your products, services, or promotions. 
+            Customize with prefixes, expiration dates, and usage limits.
+        </p>
+        <a href="{{ url_for('generate') }}" class="btn btn-primary">
+            Generate Codes &#8594;
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#9989; Validate Code</h2>
+        </div>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+            Check if an activation code is valid and activate it. 
+            Track who used each code and when.
+        </p>
+        <a href="{{ url_for('validate') }}" class="btn btn-success">
+            Validate Code &#8594;
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128203; View All Codes</h2>
+        </div>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+            Browse all generated codes, filter by status, and manage them. 
+            Activate, deactivate, or delete codes as needed.
+        </p>
+        <a href="{{ url_for('codes') }}" class="btn btn-secondary">
+            View Codes &#8594;
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128202; Statistics</h2>
+        </div>
+        <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+            View detailed statistics about your activation codes. 
+            Track usage rates, recent activations, and more.
+        </p>
+        <a href="{{ url_for('statistics') }}" class="btn btn-secondary">
+            View Stats &#8594;
+        </a>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <div class="card-header">
+        <h2 class="card-title">&#9889; Features</h2>
+    </div>
+    <div class="grid grid-2">
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">&#128274; Secure Code Generation</h4>
+            <p style="color: var(--gray-600);">Cryptographically secure random codes with customizable formats</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">&#128337; Expiration Support</h4>
+            <p style="color: var(--gray-600);">Set expiration dates for time-limited promotions or trials</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">&#128257; Multi-Use Codes</h4>
+            <p style="color: var(--gray-600);">Create codes that can be used multiple times with limits</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">&#128200; Usage Tracking</h4>
+            <p style="color: var(--gray-600);">Track when and by whom each code was activated</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

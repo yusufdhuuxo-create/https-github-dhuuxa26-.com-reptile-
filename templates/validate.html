@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Validate Code - Activation Code Manager{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Validate Activation Code</h1>
+    <p>Check and activate your code</p>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128273; Enter Your Code</h2>
+        </div>
+        <form method="POST">
+            <div class="form-group">
+                <label class="form-label" for="code">Activation Code</label>
+                <input type="text" class="form-input" id="code" name="code" required 
+                       placeholder="XXXX-XXXX-XXXX" style="font-family: monospace; font-size: 1.25rem; letter-spacing: 2px; text-align: center;"
+                       value="{% if result %}{{ result.code }}{% endif %}">
+                <p class="form-hint">Enter the activation code exactly as received</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="user_name">Your Name (Optional)</label>
+                <input type="text" class="form-input" id="user_name" name="user_name" placeholder="Enter your name for tracking">
+                <p class="form-hint">This helps identify who used the code</p>
+            </div>
+            
+            <button type="submit" class="btn btn-success" style="width: 100%;">
+                &#10004; Validate & Activate
+            </button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">&#128196; Result</h2>
+        </div>
+        
+        {% if result %}
+            <div class="result-box {{ 'success' if result.valid else 'error' }}">
+                <div class="result-icon">
+                    {% if result.valid %}&#10004;{% else %}&#10006;{% endif %}
+                </div>
+                <h3 style="margin-bottom: 0.5rem;">
+                    {% if result.valid %}Code Activated!{% else %}Validation Failed{% endif %}
+                </h3>
+                <p>{{ result.message }}</p>
+                
+                {% if result.valid and result.data %}
+                    <div style="margin-top: 1.5rem; text-align: left; background: white; padding: 1rem; border-radius: 8px;">
+                        <p><strong>Code:</strong> {{ result.data.code }}</p>
+                        {% if result.data.name %}
+                            <p><strong>Batch:</strong> {{ result.data.name }}</p>
+                        {% endif %}
+                        <p><strong>Uses:</strong> {{ result.data.uses_count }} / {{ result.data.uses_allowed }}</p>
+                        {% if result.data.expires_at %}
+                            <p><strong>Expires:</strong> {{ result.data.expires_at }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">&#128269;</div>
+                <p>Enter a code to validate</p>
+                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Results will appear here</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <div class="card-header">
+        <h2 class="card-title">&#128161; How It Works</h2>
+    </div>
+    <div class="grid grid-2">
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">1. Enter Your Code</h4>
+            <p style="color: var(--gray-600);">Type or paste your activation code in the field above</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">2. Click Validate</h4>
+            <p style="color: var(--gray-600);">The system will check if the code is valid and available</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">3. Automatic Activation</h4>
+            <p style="color: var(--gray-600);">Valid codes are automatically activated upon validation</p>
+        </div>
+        <div style="padding: 1rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">4. Usage Tracking</h4>
+            <p style="color: var(--gray-600);">Each use is recorded with timestamp and user info</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

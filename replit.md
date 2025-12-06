@@ -1,89 +1,98 @@
-# Project Overview
+# Activation Code Manager
 
-## Owner
-**Fardowso Dhuuxo** - All Rights Reserved
+A beautiful, feature-rich activation code management system built with Python Flask.
 
-## Repository Information
-Professional full-stack TypeScript web application with modern architecture and development practices.
+## Overview
 
-## Current State
-Production-ready full-stack application with:
-- ✅ TypeScript frontend (React + Vite)
-- ✅ TypeScript backend (Express + Node.js)
-- ✅ Shared type system
-- ✅ Professional project structure
-- ✅ Development tools configured (ESLint, Prettier)
-- ✅ Hot reload enabled for rapid development
+This application allows you to:
+- **Generate** unique activation codes with customizable options
+- **Validate** codes and track their usage
+- **Manage** all codes with filtering and status tracking
+- **View statistics** on code usage and performance
 
-## Architecture
+## Tech Stack
 
-### Frontend (React + Vite)
-- Port: 5000 (Replit webview)
-- Framework: React 18 with TypeScript
-- Build: Vite for fast development and optimized production builds
-- Styling: Modern CSS3 with responsive design
-
-### Backend (Express API)
-- Port: 3001 (localhost)
-- Framework: Express with TypeScript
-- Runtime: Node.js 20 with tsx for TypeScript execution
-- Security: Helmet.js, CORS protection
-
-### Shared Layer
-- Common TypeScript types and interfaces
-- Shared constants and validators
-- Ensures type safety across the entire stack
+- **Backend**: Python 3.11 with Flask
+- **Database**: PostgreSQL with SQLAlchemy ORM
+- **Frontend**: Jinja2 templates with modern CSS
+- **Server**: Gunicorn (production) / Flask dev server (development)
 
 ## Project Structure
+
 ```
-src/
-├── backend/       # Express API
-├── frontend/      # React UI
-└── shared/        # Common code
+/
+├── app.py                 # Main Flask application with all routes and models
+├── templates/             # Jinja2 HTML templates
+│   ├── base.html          # Base template with navigation and styles
+│   ├── index.html         # Home page
+│   ├── generate.html      # Code generation page
+│   ├── validate.html      # Code validation page
+│   ├── codes.html         # All codes list with filtering
+│   └── statistics.html    # Statistics dashboard
+├── static/                # Static files (if needed)
+├── pyproject.toml         # Python dependencies
+└── replit.md              # This file
 ```
 
-See `PROJECT_STRUCTURE.md` for detailed documentation.
+## Features
 
-## Technical Setup
-- **Languages:** TypeScript 5.3+, Node.js 20
-- **Frontend:** React 18, Vite 5
-- **Backend:** Express 4
-- **Tools:** ESLint, Prettier, Concurrently
-- **Package Manager:** npm
+### Code Generation
+- Generate 1-100 codes at once
+- Add custom prefix (e.g., PROMO-XXXX-XXXX)
+- Set batch names for organization
+- Configure uses per code
+- Set expiration dates
 
-## Workflows
-- `web-server` - Runs both frontend and backend concurrently
-  - Frontend: Vite dev server (port 5000)
-  - Backend: Express API (port 3001)
-  - Auto-restart on file changes
+### Code Validation
+- Validate codes with instant feedback
+- Track user who activated the code
+- Automatic usage counting
+- Expiration checking
 
-## Development Features
-- 🔥 Hot module replacement (HMR)
-- 🎯 Type checking across full stack
-- 🔍 Code linting and formatting
-- 📡 API proxy configuration
-- 🔒 Security middleware
-- ⚡ Fast build times
+### Code Management
+- View all codes with pagination
+- Filter by status (All, Valid, Used, Inactive)
+- Toggle code activation status
+- Delete codes
+- Copy codes to clipboard
 
-## Deployment
-- Target: Autoscale deployment
-- Build: TypeScript compilation + Vite optimization
-- Run: Production Express server
+### Statistics Dashboard
+- Total, active, used, inactive counts
+- Today's activity tracking
+- Usage rate calculation
+- Recent codes and activations
 
-## User Preferences
-- Professional, modular architecture
-- TypeScript for type safety
-- Separation of concerns (frontend/backend/shared)
-- Modern development practices
+## API Endpoints
+
+- `GET /` - Home page
+- `GET/POST /generate` - Generate activation codes
+- `GET/POST /validate` - Validate and activate codes
+- `GET /codes` - View all codes
+- `GET /statistics` - View statistics
+- `POST /api/code/<id>/toggle` - Toggle code active status
+- `POST /api/code/<id>/delete` - Delete a code
+- `POST /api/validate` - API endpoint for code validation
+
+## Running the Application
+
+The application runs on port 5000 with:
+```bash
+python app.py
+```
+
+For production, use:
+```bash
+gunicorn --bind 0.0.0.0:5000 app:app
+```
+
+## Database
+
+Uses PostgreSQL via the `DATABASE_URL` environment variable. Tables are automatically created on startup.
 
 ## Recent Changes
-- **Nov 17, 2025**: Initial professional setup
-  - Configured TypeScript for frontend and backend
-  - Set up Vite + React frontend
-  - Created Express API backend
-  - Implemented shared type system
-  - Added development tooling (ESLint, Prettier)
-  - Configured workflows and deployment
 
-## Last Updated
-November 17, 2025
+- 2024-12-06: Created activation code management system with Python Flask
+- Implemented code generation with secure random algorithm
+- Added validation system with usage tracking
+- Built beautiful responsive UI with modern CSS
+- Added statistics dashboard
