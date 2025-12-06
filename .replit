@@ -1,4 +1,4 @@
-modules = ["nodejs-20"]
+modules = ["nodejs-20", "web"]
 [agent]
 expertMode = true
 
@@ -30,8 +30,16 @@ args = "npm run dev"
 waitForPort = 5000
 
 [[ports]]
+localPort = 3001
+externalPort = 3001
+
+[[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 42315
+externalPort = 3000
 
 [deployment]
 deploymentTarget = "autoscale"

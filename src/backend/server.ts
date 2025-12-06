@@ -12,7 +12,7 @@ dotenv.config();
 const app: Application = express();
 const isProduction = process.env.NODE_ENV === 'production';
 const PORT = isProduction ? Number(process.env.PORT) || 5000 : Number(process.env.BACKEND_PORT) || 3001;
-const HOST = isProduction ? '0.0.0.0' : 'localhost';
+const HOST = '0.0.0.0';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
